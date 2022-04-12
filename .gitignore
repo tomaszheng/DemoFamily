@@ -1,0 +1,11 @@
+.vscode/
+
+# Unity 缓存或临时文件
+obj/
+Logs/
+Temp/
+Library/
+UserSettings/
+
+# 第三方资源/库
+PolygonFantasyKingdom/
