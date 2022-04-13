@@ -11,15 +11,17 @@ namespace Family.Gameplay
         [Tooltip("Rotation speed for moving the camera")]
         public float RotationSpeed = 200f;
 
+        [Header("Gravity")]
+        [Tooltip("Player掉落时所受到的重力")]
         public float Gravity = -10f;
+        [Tooltip("Player掉落时下落的最大速度")]
+        public float MaxFallSpeed = 10f;
 
-        public float RotationMultiplier
-        {
-            get
-            {
-                return 1f;
-            }
-        }
+        [Header("Speed")]
+        [Tooltip("Player移动速度")]
+        public float MoveSpeed = 2f;
+        [Tooltip("Player跑步速度")]
+        public float RunSpeed = 4f;
 
         private Animator m_Animator;
         private PlayerInputHandler m_InputHandler;
@@ -30,6 +32,8 @@ namespace Family.Gameplay
         private bool m_IsMoveToBackward = false;
         private bool m_IsMoveToLeft = false;
         private bool m_IsMoveToRight = false;
+
+        private float m_FallSpeed = 0f;
 
         void Start()
         {
@@ -82,19 +86,25 @@ namespace Family.Gameplay
         public void UpdateRotation()
         {
             transform.Rotate(
-                    new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed * RotationMultiplier),
+                    new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed),
                         0f), Space.Self);
         }
 
         public void UpdateCharacterController()
         {
             Vector3 moveInput = m_InputHandler.GetMoveInput();
-            Vector3 worldMoveInput = transform.TransformVector(moveInput);
-            m_CharacterController.Move(worldMoveInput * Time.deltaTime);
+            Vector3 worldMoveInput = transform.TransformVector(moveInput).normalized;
+            m_CharacterController.Move(worldMoveInput * MoveSpeed * Time.deltaTime);
 
             if (m_CharacterController.collisionFlags != CollisionFlags.Below)
             {
-                m_CharacterController.Move(transform.up * Gravity * Time.deltaTime);
+                m_FallSpeed += Gravity * Time.deltaTime;
+                m_FallSpeed = Mathf.Min(m_FallSpeed, MaxFallSpeed);
+                m_CharacterController.Move(transform.up * m_FallSpeed);
+            }
+            else
+            {
+                m_FallSpeed = 0f;
             }
         }
     }
