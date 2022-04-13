@@ -45,7 +45,9 @@ namespace Family.AI
         void Update()
         {
             UpdatePatrolRouteIndex();
-            SetNavDestination(PatrolRoute.GetRoutePosition(m_PatrolRouteIndex));
+
+            Vector3 destination = PatrolRoute.GetRoutePosition(m_PatrolRouteIndex);
+            SetNavDestination(destination);
         }
 
         private void UpdatePatrolRouteIndex()
@@ -60,14 +62,7 @@ namespace Family.AI
                 {
                     m_PatrolRouteReverse = false;
                 }
-                if (m_PatrolRouteReverse)
-                {
-                    m_PatrolRouteIndex = m_PatrolRouteIndex - 1;
-                }
-                else 
-                {
-                    m_PatrolRouteIndex = m_PatrolRouteIndex + 1;
-                }
+                m_PatrolRouteIndex += m_PatrolRouteReverse ? -1 : 1;
             }
         }
     }
