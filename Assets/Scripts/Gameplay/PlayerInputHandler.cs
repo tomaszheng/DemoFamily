@@ -6,6 +6,12 @@ namespace Family.Gameplay
 {
     public class PlayerInputHandler : MonoBehaviour
     {
+        private void Start() 
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        
         public bool CanProcessInput()
         {
             return true;
@@ -33,15 +39,6 @@ namespace Family.Gameplay
             return false;
         }
 
-        public bool IsMoveHorizontalUp()
-        {
-            if (CanProcessInput())
-            {
-                return Input.GetButtonUp(InputConstants.k_AxisNameHorizontal);
-            }
-            return false;
-        }
-
         public bool IsMoveVertical()
         {
             if (CanProcessInput())
@@ -51,13 +48,41 @@ namespace Family.Gameplay
             return false;
         }
 
-        public bool IsMoveVerticalUp()
+        public float GetLookInputsHorizontal()
+        {
+            return GetMouseOrStickLookAxis(InputConstants.k_MouseAxisNameHorizontal,
+                InputConstants.k_AxisNameJoystickLookHorizontal);
+        }
+
+        public float GetLookInputsVertical()
+        {
+            return GetMouseOrStickLookAxis(InputConstants.k_MouseAxisNameVertical,
+                InputConstants.k_AxisNameJoystickLookVertical);
+        }
+
+        public float GetMouseOrStickLookAxis(string mouseInputName, string stickInputName)
         {
             if (CanProcessInput())
             {
-                return Input.GetButtonUp(InputConstants.k_AxisNameVertical);
+                // Check if this look input is coming from the mouse
+                bool isGamepad = Input.GetAxis(stickInputName) != 0f;
+                float i = isGamepad ? Input.GetAxis(stickInputName) : Input.GetAxisRaw(mouseInputName);
+
+                if (isGamepad)
+                {
+                    // since mouse input is already deltaTime-dependant, only scale input with frame time if it's coming from sticks
+                    i *= Time.deltaTime;
+                }
+                else
+                {
+                    // reduce mouse input amount to be equivalent to stick movement
+                    i *= 0.01f;
+                }
+
+                return i;
             }
-            return false;
+
+            return 0f;
         }
     }
 }

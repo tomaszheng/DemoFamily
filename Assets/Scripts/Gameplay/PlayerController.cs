@@ -6,6 +6,21 @@ namespace Family.Gameplay
 {
     public class PlayerController : MonoBehaviour
     {
+
+        [Header("Rotation")]
+        [Tooltip("Rotation speed for moving the camera")]
+        public float RotationSpeed = 200f;
+
+        public float Gravity = -10f;
+
+        public float RotationMultiplier
+        {
+            get
+            {
+                return 1f;
+            }
+        }
+
         private Animator m_Animator;
         private PlayerInputHandler m_InputHandler;
         private CharacterController m_CharacterController;
@@ -16,7 +31,6 @@ namespace Family.Gameplay
         private bool m_IsMoveToLeft = false;
         private bool m_IsMoveToRight = false;
 
-        // Start is called before the first frame update
         void Start()
         {
             m_Animator = GetComponent<Animator>();
@@ -24,14 +38,11 @@ namespace Family.Gameplay
             m_CharacterController = GetComponent<CharacterController>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             UpdateAnimator();
-
-            Vector3 moveInput = m_InputHandler.GetMoveInput();
-            Vector3 worldMoveInput = transform.TransformVector(moveInput);
-            m_CharacterController.Move(worldMoveInput * Time.deltaTime);
+            UpdateRotation();
+            UpdateCharacterController();
         }
 
         public void UpdateAnimator()
@@ -66,6 +77,25 @@ namespace Family.Gameplay
             m_Animator.SetBool("Backward", m_IsMoveToBackward);
             m_Animator.SetBool("ToLeft", m_IsMoveToLeft);
             m_Animator.SetBool("ToRight", m_IsMoveToRight);
+        }
+
+        public void UpdateRotation()
+        {
+            transform.Rotate(
+                    new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed * RotationMultiplier),
+                        0f), Space.Self);
+        }
+
+        public void UpdateCharacterController()
+        {
+            Vector3 moveInput = m_InputHandler.GetMoveInput();
+            Vector3 worldMoveInput = transform.TransformVector(moveInput);
+            m_CharacterController.Move(worldMoveInput * Time.deltaTime);
+
+            if (m_CharacterController.collisionFlags != CollisionFlags.Below)
+            {
+                m_CharacterController.Move(transform.up * Gravity * Time.deltaTime);
+            }
         }
     }
 }
