@@ -48,6 +48,15 @@ namespace Family.Gameplay
             return false;
         }
 
+        public bool GetRunHold()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetButton(InputConstants.k_ButtonNameRun);
+            }
+            return false;
+        }
+
         public float GetLookInputsHorizontal()
         {
             return GetMouseOrStickLookAxis(InputConstants.k_MouseAxisNameHorizontal,

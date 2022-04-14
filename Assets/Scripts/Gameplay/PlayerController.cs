@@ -28,6 +28,7 @@ namespace Family.Gameplay
         private CharacterController m_CharacterController;
 
         private bool m_IsMoving = false;
+        private bool m_IsRunning = false;
         private bool m_IsMovingHorizontal = false;
         private bool m_IsMoveToBackward = false;
         private bool m_IsMoveToLeft = false;
@@ -77,7 +78,10 @@ namespace Family.Gameplay
                 m_IsMoveToRight = false;
             }
 
+            m_IsRunning = m_InputHandler.GetRunHold();
+
             m_Animator.SetBool("Walking", m_IsMoving || m_IsMovingHorizontal);
+            m_Animator.SetBool("Running", m_IsRunning);
             m_Animator.SetBool("Backward", m_IsMoveToBackward);
             m_Animator.SetBool("ToLeft", m_IsMoveToLeft);
             m_Animator.SetBool("ToRight", m_IsMoveToRight);
@@ -94,7 +98,8 @@ namespace Family.Gameplay
         {
             Vector3 moveInput = m_InputHandler.GetMoveInput();
             Vector3 worldMoveInput = transform.TransformVector(moveInput).normalized;
-            m_CharacterController.Move(worldMoveInput * MoveSpeed * Time.deltaTime);
+            float speed = m_IsRunning ? RunSpeed : MoveSpeed;
+            m_CharacterController.Move(worldMoveInput * speed * Time.deltaTime);
 
             if (m_CharacterController.collisionFlags != CollisionFlags.Below)
             {
