@@ -89,9 +89,10 @@ namespace Family.Gameplay
 
         public void UpdateRotation()
         {
-            transform.Rotate(
-                    new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed),
-                        0f), Space.Self);
+            if (!m_InputHandler.GetFreeLookHold()) {
+                float angle = m_InputHandler.GetLookInputsHorizontal() * RotationSpeed;
+                transform.Rotate(new Vector3(0f, angle, 0f), Space.Self);
+            }
         }
 
         public void UpdateCharacterController()

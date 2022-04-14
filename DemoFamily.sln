@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.AI", "Family.AI.csproj", "{c158b89b-c072-cdbf-80eb-0c362f3f263a}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.Gameplay", "Family.Gameplay.csproj", "{de82b692-2ccc-5443-9407-a55802f8ee46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Family.AI", "Family.AI.csproj", "{c158b89b-c072-cdbf-80eb-0c362f3f263a}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{c158b89b-c072-cdbf-80eb-0c362f3f263a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{c158b89b-c072-cdbf-80eb-0c362f3f263a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{de82b692-2ccc-5443-9407-a55802f8ee46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{de82b692-2ccc-5443-9407-a55802f8ee46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{c158b89b-c072-cdbf-80eb-0c362f3f263a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{c158b89b-c072-cdbf-80eb-0c362f3f263a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -57,6 +57,15 @@ namespace Family.Gameplay
             return false;
         }
 
+        public bool GetFreeLookHold()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetButton(InputConstants.k_ButtonNameFreeLook);
+            }
+            return false;
+        }
+
         public float GetLookInputsHorizontal()
         {
             return GetMouseOrStickLookAxis(InputConstants.k_MouseAxisNameHorizontal,
