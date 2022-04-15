@@ -23,9 +23,15 @@ namespace Family.Gameplay
         [Tooltip("Player跑步速度")]
         public float RunSpeed = 4f;
 
+        [Header("Weapon")]
+        [Tooltip("武器放置位置")]
+        public Transform WeaponRoot;
+
         private PlayerInputHandler m_InputHandler;
         private PlayerAnimator m_PlayerAnimator;
         private CharacterController m_CharacterController;
+
+        private Transform m_Weapon;
 
         private float m_FallSpeed = 0f;
 
@@ -34,6 +40,16 @@ namespace Family.Gameplay
             m_InputHandler = GetComponent<PlayerInputHandler>();
             m_PlayerAnimator = GetComponent<PlayerAnimator>();
             m_CharacterController = GetComponent<CharacterController>();
+
+            InitWeapon();
+        }
+
+        void InitWeapon()
+        {
+            Weapon weapon = GetComponent<Weapon>();
+            m_Weapon = Instantiate(weapon.WeaponPf, WeaponRoot).transform;
+            m_Weapon.localPosition = weapon.Position;
+            m_Weapon.localEulerAngles = weapon.Rotation;
         }
 
         void Update()

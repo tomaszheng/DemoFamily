@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,7 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Gameplay\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Weapons\GreatSword.cs" />
     <Reference Include="UnityEngine">
         <HintPath>D:\devtools\Unity Editor\2020.3.30f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -640,8 +640,18 @@
     <Reference Include="UnityEngine.UI">
         <HintPath>D:\testflow\LearnU3D\DemoFamily\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>D:\testflow\LearnU3D\DemoFamily\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>D:\testflow\LearnU3D\DemoFamily\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Family.Gameplay.csproj">
+      <Project>{de82b692-2ccc-5443-9407-a55802f8ee46}</Project>
+      <Name>Family.Gameplay</Name>
+    </ProjectReference>
     <ProjectReference Include="Family.AI.csproj">
       <Project>{c158b89b-c072-cdbf-80eb-0c362f3f263a}</Project>
       <Name>Family.AI</Name>

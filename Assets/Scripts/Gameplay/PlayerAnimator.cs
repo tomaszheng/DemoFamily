@@ -10,34 +10,57 @@ namespace Family.Gameplay
         private PlayerInputHandler m_InputHandler;
 
         private bool m_IsMoving = false;
+        private bool m_IsWalking = false;
         private bool m_IsRunning = false;
         private bool m_IsMovingHorizontal = false;
-        private bool m_IsMoveToBackward = false;
+        private bool m_IsMoveBackward = false;
         private bool m_IsMoveToLeft = false;
         private bool m_IsMoveToRight = false;
+        private bool m_IsSmiting = false;
+        private bool m_IsSlashing = false;
 
-        // Start is called before the first frame update
         void Start()
         {
             m_Animator = GetComponent<Animator>();
             m_InputHandler = GetComponent<PlayerInputHandler>();
         }
 
-        // Update is called once per frame
         void Update()
         {
 
             Vector3 moveInput = m_InputHandler.GetMoveInput();
 
-            if (m_InputHandler.IsMoveVertical())
+            m_IsRunning = m_InputHandler.GetRunHold();
+            m_IsWalking = false;
+            m_IsMoveBackward = false;
+            m_IsSmiting = false;
+            m_IsSlashing = false;
+
+            if (m_InputHandler.GetMoveBackwardHold())
             {
-                m_IsMoving = true;
-                m_IsMoveToBackward = moveInput.z < 0;
+                m_IsRunning = false;
+                m_IsWalking = false;
+                m_IsMoveBackward = true;
             }
-            else
+            else if (m_InputHandler.GetMoveForwardHold())
             {
-                m_IsMoving = false;
-                m_IsMoveToBackward = false;
+                m_IsWalking = m_IsRunning ? false : true;
+                m_IsMoveBackward = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                m_IsSmiting = true;
+            }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                m_IsSlashing = true;
+            }
+
+            if (m_IsSmiting || m_IsSlashing) 
+            {
+                m_IsWalking = false;
+                m_IsRunning = false;
             }
 
             if (m_InputHandler.IsMoveHorizontal())
@@ -53,13 +76,14 @@ namespace Family.Gameplay
                 m_IsMoveToRight = false;
             }
 
-            m_IsRunning = m_InputHandler.GetRunHold();
+            if (m_IsWalking || m_IsRunning || m_IsSmiting || m_IsSlashing) {
+                Debug.Log(string.Format("{0}, {1}, {2}, {3}", m_IsWalking, m_IsRunning, m_IsSmiting, m_IsSlashing));
+            }
 
-            m_Animator.SetBool("Walking", m_IsMoving || m_IsMovingHorizontal);
+            m_Animator.SetBool("Walking", m_IsWalking);
             m_Animator.SetBool("Running", m_IsRunning);
-            m_Animator.SetBool("Backward", m_IsMoveToBackward);
-            m_Animator.SetBool("ToLeft", m_IsMoveToLeft);
-            m_Animator.SetBool("ToRight", m_IsMoveToRight);
+            m_Animator.SetBool("Smiting", m_IsSmiting);
+            m_Animator.SetBool("Slashing", m_IsSlashing);
         }
 
         public bool IsRunning()

@@ -66,6 +66,42 @@ namespace Family.Gameplay
             return false;
         }
 
+        public bool GetMoveForwardHold()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetKey(KeyCode.W);
+            }
+            return false;
+        }
+
+        public bool GetMoveBackwardHold()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetKey(KeyCode.S);
+            }
+            return false;
+        }
+
+        public bool GetMoveLeftHold()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetKey(KeyCode.A);
+            }
+            return false;
+        }
+
+        public bool GetMoveRightHold()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetKey(KeyCode.D);
+            }
+            return false;
+        }
+
         public float GetLookInputsHorizontal()
         {
             return GetMouseOrStickLookAxis(InputConstants.k_MouseAxisNameHorizontal,

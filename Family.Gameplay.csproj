@@ -41,6 +41,7 @@
      <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Gameplay\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Gameplay\PlayerAnimator.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Weapon.cs" />
      <None Include="Assets\Scripts\Gameplay\Family.Gameplay.asmdef" />
     <Reference Include="UnityEngine">
         <HintPath>D:\devtools\Unity Editor\2020.3.30f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
