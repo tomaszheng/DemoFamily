@@ -18,6 +18,7 @@ namespace Family.Gameplay
         private bool m_IsMoveToRight = false;
         private bool m_IsSmiting = false;
         private bool m_IsSlashing = false;
+        private int m_SlashIndex = 0;
 
         void Start()
         {
@@ -35,6 +36,7 @@ namespace Family.Gameplay
             m_IsMoveBackward = false;
             m_IsSmiting = false;
             m_IsSlashing = false;
+            m_SlashIndex = 0;
 
             if (m_InputHandler.GetMoveBackwardHold())
             {
@@ -55,6 +57,7 @@ namespace Family.Gameplay
             if (Input.GetKeyDown(KeyCode.J))
             {
                 m_IsSlashing = true;
+                m_SlashIndex = Mathf.FloorToInt(Random.Range(1f, 2.9f));
             }
 
             if (m_IsSmiting || m_IsSlashing) 
@@ -76,14 +79,11 @@ namespace Family.Gameplay
                 m_IsMoveToRight = false;
             }
 
-            if (m_IsWalking || m_IsRunning || m_IsSmiting || m_IsSlashing) {
-                Debug.Log(string.Format("{0}, {1}, {2}, {3}", m_IsWalking, m_IsRunning, m_IsSmiting, m_IsSlashing));
-            }
-
             m_Animator.SetBool("Walking", m_IsWalking);
             m_Animator.SetBool("Running", m_IsRunning);
             m_Animator.SetBool("Smiting", m_IsSmiting);
             m_Animator.SetBool("Slashing", m_IsSlashing);
+            m_Animator.SetInteger("SlashSelector", m_SlashIndex);
         }
 
         public bool IsRunning()
